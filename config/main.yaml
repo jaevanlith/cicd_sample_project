@@ -1,0 +1,9 @@
+# Define any desired variables and their values
+message: "Hello world!"
+repeat: 10
+output_filename: "output.csv"
+
+# Specify where to save the results
+hydra:
+  run:
+    dir: ./result/${message}-${now:%m-%d-%H-%M-%S}
