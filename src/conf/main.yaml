@@ -6,7 +6,7 @@ predict: true
 
 # Define directories
 data_dir: ../../data
-model_dir: ../../models/saved
+model_dir: ../../src/models/saved
 
 # Specify where to save the results
 hydra:

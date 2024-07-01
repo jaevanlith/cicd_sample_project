@@ -4,7 +4,7 @@ from predict import predict
 from utils import IO
 
 
-@hydra.main(config_path='./config', config_name='main.yaml', version_base='1.1')
+@hydra.main(config_path='./conf', config_name='main.yaml', version_base='1.1')
 def main(cfg):
     '''
     Main method of repository.
