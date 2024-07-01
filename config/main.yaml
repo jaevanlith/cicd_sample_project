@@ -1,9 +1,16 @@
-# Define any desired variables and their values
-message: "Hello world!"
-repeat: 10
-output_filename: "output.csv"
+# Define model
+model: LinearRegression
+epochs: 100
+train: true
+predict: true
+
+# Define directories
+data_dir: ../../data
+model_dir: ../../saved_models
 
 # Specify where to save the results
 hydra:
   run:
-    dir: ./result/${message}-${now:%m-%d-%H-%M-%S}
+    dir: ./results/${model}-${now:%m-%d-%H-%M-%S}
+  job:
+    chdir: true

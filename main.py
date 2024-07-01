@@ -1,23 +1,29 @@
 import hydra
-import pandas as pd
-from utils.IO import write_to_csv
+from train import train
+from predict import predict
+from utils import IO
 
 
-@hydra.main(config_path='./config', config_name='main.yaml')
+@hydra.main(config_path='./config', config_name='main.yaml', version_base='1.1')
 def main(cfg):
     '''
     Main method of repository.
 
     @param cfg: Hydra configuration object
     '''
-    # EXAMPLE: how to use config
-    data = {'messages': []}
-    for _ in range(cfg.repeat):
-        data['messages'].append(cfg.message)
+    print('Running main...')
 
-    # EXAMPLE: how to use utils
-    df = pd.DataFrame(data)
-    write_to_csv(df, cfg.output_filename)
+    model = None
+
+    if cfg.train:
+        train_score, test_score, model = train(cfg)
+        print(f'Train score: {train_score}')
+        print(f'Test score: {test_score}')
+    
+    if cfg.predict:
+        if model is None:
+            model = IO.load_model(cfg.model_dir + '/' + cfg.model + '.pkl')
+        predict(cfg, model)
 
 
 if __name__ == '__main__':
