@@ -16,11 +16,13 @@ def main(cfg):
     model = None
 
     if cfg.train:
+        print('Training model...')
         train_score, test_score, model = train(cfg)
         print(f'Train score: {train_score}')
         print(f'Test score: {test_score}')
     
     if cfg.predict:
+        print('Predicting...')
         if model is None:
             model = IO.load_model(cfg.model_dir + '/' + cfg.model + '.pkl')
         predict(cfg, model)
