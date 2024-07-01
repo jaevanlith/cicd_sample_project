@@ -1,4 +1,4 @@
 hydra-core
 pandas
 numpy
-sklearn
+scikit-learn
