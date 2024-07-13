@@ -1,14 +1,53 @@
-name: Build & Deploy app
+name: Pipeline
 
+# Trigger the workflow on push or merge request to the main branch
 on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
+# Jobs: lint, test
 jobs:
-  build-deploy:
-    name: Build & Deploy test
+  lint:
+    name: Lint
     runs-on: windows-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'  # Specify your Python version here
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install black flake8
+
+      - name: Run Black
+        run: |
+          black --check .
+
+      - name: Run Flake8
+        run: |
+          flake8 .
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: |
+          docker build -t my-app-test -f docker/Dockerfile .
+
+      - name: Run tests
+        run: |
+          docker run --rm my-app-test python src/tests/test_predict.py
+          docker run --rm my-app-test python src/tests/test_train.py
