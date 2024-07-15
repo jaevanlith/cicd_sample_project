@@ -6,7 +6,8 @@ def predict(cfg, model):
     Method to predict on unlabeled data and write to file.
     """
     # Load data
-    X, _ = IO.read_csv_to_numpy(cfg.data_dir + "/data_unlabeled.csv", labeled=False)
+    X, _ = IO.read_csv_to_numpy(cfg.data_dir + "/data_unlabeled.csv",
+                                labeled=False)
 
     # Predict
     y_pred = model.predict(X)

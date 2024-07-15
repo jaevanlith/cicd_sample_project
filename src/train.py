@@ -14,8 +14,11 @@ def train(cfg, save_model=True):
     """
 
     # Load data
-    X, y = IO.read_csv_to_numpy(cfg.data_dir + "/data_labeled.csv", labeled=True)
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+    X, y = IO.read_csv_to_numpy(cfg.data_dir + "/data_labeled.csv",
+                                labeled=True)
+    X_train, X_test, y_train, y_test = train_test_split(X,
+                                                        y,
+                                                        test_size=0.2)
 
     # Initialize model
     if cfg.model == "LinearRegression":
